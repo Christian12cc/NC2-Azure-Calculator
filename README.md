@@ -1,5 +1,5 @@
-# AVS-calculator
-Azure VMware Solution calculator
+# NC2-Azure-calculator
+Nutanix NC2 Azure - calculator
 
 
-sample: https://storagereportazure.z28.web.core.windows.net/CalcAVS/calcAVS.html
+
