@@ -152,6 +152,7 @@
               $.each(JSONhost.Items, function (index, value) {
                 if ($.inArray(value.SkuName, typeHostList) === -1) {
                   if (value.SkuName != typeHostprec) {
+alert(value.SkuName);
                     typeHostList.push([value.SkuName]);
                     typeHostprec = value.SkuName
                   }
@@ -534,4 +535,5 @@
 </body>
 
 </html>
+
 
