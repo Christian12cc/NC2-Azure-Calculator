@@ -77,7 +77,8 @@
       Hosts['AN36 Trial'] = { cores: 36, mem: 576, disks: 15.36, CPUdesc: "2 Intel Xeon Gold 6140 18 cores 2.3 GHz", Disksdesc: "SSD" }
       Hosts.AN36P = { cores: 36, mem: 768, disks: 19.2, CPUdesc: "Dual Intel Xeon Gold 6240 18 cores 2.6 GHz / 3.9 GHz Turbo", Disksdesc: "NVMe" }
       Hosts['AN36P Trial'] = { cores: 36, mem: 768, disks: 19.2, CPUdesc: "Dual Intel Xeon Gold 6240 18 cores 2.6 GHz / 3.9 GHz Turbo", Disksdesc: "NVMe" }
-//	  Hosts['AV64 Trial Node'] = { cores: 64, mem: 1024, disks: 19.2, CPUdesc: "2 Intel Xeon Platinum 8370C 32 cores 2.8 GHz / 3.5 GHz Turbo", Disksdesc: "NVMe" }
+	  Hosts['AN64'] = { cores: 64, mem: 1024, disks: 19.2, CPUdesc: "2 Intel Xeon Platinum 8370C 32 cores 2.8 GHz / 3.5 GHz Turbo", Disksdesc: "NVMe" }
+	  Hosts['AN64 Trial Node'] = { cores: 64, mem: 1024, disks: 19.2, CPUdesc: "2 Intel Xeon Platinum 8370C 32 cores 2.8 GHz / 3.5 GHz Turbo", Disksdesc: "NVMe" }
 
       Host = "AN36P"
 //      Region = "EU West"
@@ -142,17 +143,17 @@
         },
 
         f_CreateListType: function () {
-          url = "https://prices.azure.com/api/retail/prices?$filter=startswith(armskuname,%20%27AN%27)%20and%20%20pricetype%20eq%20%27Consumption%27&$orderby=armSkuName"
+          url = "https://prices.azure.com/api/retail/prices?$filter=endswith(productName,%20%27Nutanix%27)%20and%20%20pricetype%20eq%20%27Consumption%27&$orderby=SkuName"
           return $.ajax({
             url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(url), success: function (data) {
               JSONhost = JSON.parse(data.contents);
               var typeHostList = []
               var typeHostprec = ""
               $.each(JSONhost.Items, function (index, value) {
-                if ($.inArray(value.armSkuName, typeHostList) === -1) {
-                  if (value.armSkuName != typeHostprec) {
-                    typeHostList.push([value.armSkuName]);
-                    typeHostprec = value.armSkuName
+                if ($.inArray(value.SkuName, typeHostList) === -1) {
+                  if (value.SkuName != typeHostprec) {
+                    typeHostList.push([value.SkuName]);
+                    typeHostprec = value.SkuName
                   }
                 }
               });
@@ -176,7 +177,7 @@
 
         f_pricingregion: function () {
           var type = $("#HostType option:selected").val();
-          url = "https://prices.azure.com/api/retail/prices?currencyCode=%27USD%27&$filter=priceType%20eq%20%27Consumption%27%20and%20armskuName%20eq%20%27" + type + "%27"
+          url = "https://prices.azure.com/api/retail/prices?currencyCode=%27USD%27&$filter=priceType%20eq%20%27Consumption%27%20and%20skuName%20eq%20%27" + type + "%27"
           return $.ajax({
             url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(url), success: function (data) {
               JSONregion = JSON.parse(data.contents);
@@ -246,7 +247,7 @@
           $("#cost5yreservation5").text("")
           $("#cost5y").text("")
 
-          url = "https://prices.azure.com/api/retail/prices?currencyCode=%27" + currency + "%27&$filter=location%20eq%20%27" + locationU + "%27%20and%20armskuName%20eq%20%27" + type + "%27"
+          url = "https://prices.azure.com/api/retail/prices?currencyCode=%27" + currency + "%27&$filter=location%20eq%20%27" + locationU + "%27%20and%20skuName%20eq%20%27" + type + "%27"
           $.ajax({
             url: 'https://api.allorigins.win/get?url=' + encodeURIComponent(url), success: function (data) {
               JSONregion = JSON.parse(data.contents);
@@ -533,3 +534,4 @@
 </body>
 
 </html>
+
